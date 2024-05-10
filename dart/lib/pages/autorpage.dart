@@ -1,5 +1,6 @@
 import 'package:chuva_dart/pages/palestraspage.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class AuthorPage extends StatelessWidget {
   @override
@@ -21,9 +22,7 @@ class AuthorPage extends StatelessWidget {
             Icons.arrow_back_ios,
             color: Colors.white,
           ),
-          onPressed: () {
-            Navigator.pop(context);
-          },
+          onPressed: () => GoRouter.of(context).pop(),
         ),
       ),
       body: Padding(
@@ -84,16 +83,7 @@ class AuthorPage extends StatelessWidget {
                 //itemCount: activitiesForSelectedDay.length,
                 itemBuilder: (context, index) {
                   return GestureDetector(
-                    onTap: () {
-                      // Aqui você pode implementar a navegação para a página correspondente
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) =>
-                              Palestras(), // Substitua DetalhesPage pela sua página de detalhes
-                        ),
-                      );
-                    },
+                    onTap: () => GoRouter.of(context).push('/palestras'),
                     child: Card(
                       color: Colors.white,
                       elevation: 5,

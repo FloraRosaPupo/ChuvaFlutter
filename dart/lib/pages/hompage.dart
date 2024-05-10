@@ -1,5 +1,6 @@
 import 'package:chuva_dart/pages/palestraspage.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -178,16 +179,7 @@ class _HomePageState extends State<HomePage> {
               itemCount: activitiesForSelectedDay.length,
               itemBuilder: (context, index) {
                 return GestureDetector(
-                  onTap: () {
-                    // Aqui você pode implementar a navegação para a página correspondente
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) =>
-                            Palestras(), // Substitua DetalhesPage pela sua página de detalhes
-                      ),
-                    );
-                  },
+                  onTap: () => GoRouter.of(context).push('/palestras'),
                   child: Card(
                     color: Colors.white,
                     elevation: 5,

@@ -1,6 +1,7 @@
 import 'package:chuva_dart/pages/autorpage.dart';
 import 'package:chuva_dart/pages/palestraspage.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class Atividades extends StatefulWidget {
   @override
@@ -42,14 +43,15 @@ class _AtividadesState extends State<Atividades> {
             width: double.infinity,
             height: 25,
             decoration: BoxDecoration(color: Colors.pink),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
+            child: Padding(
+              padding: EdgeInsets.all(5),
+              child:
+                  Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
                 Text(
                   'Nome da atividade',
                   style: TextStyle(color: Colors.white, fontSize: 15),
                 ),
-              ],
+              ]),
             ),
           ),
           SizedBox(height: 10),
@@ -128,42 +130,51 @@ class _AtividadesState extends State<Atividades> {
                     ),
                   ],
                 ),
-                SizedBox(height: 10),
-                Card(
-                  color: Colors.white,
-                  elevation: 5,
-                  child: Container(
-                    width: MediaQuery.of(context).size.width * 0.95,
-                    padding: EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                      border: Border(
-                        left: BorderSide(
-                          color: Colors.pink, //A COR MUDA COM A DISCIPLINA
-                          width: 3,
-                        ),
-                      ),
-                      borderRadius: BorderRadius.circular(7),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Horario e local ',
-                          style: TextStyle(fontSize: 10),
-                        ),
-                        Text(
-                          'Titulo',
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
+              ],
+            ),
+          ),
+          Expanded(
+            child: ListView.builder(
+              //itemCount: activitiesForSelectedDay.length,
+              itemBuilder: (context, index) {
+                return GestureDetector(
+                  onTap: () => GoRouter.of(context).push('/palestras'),
+                  child: Card(
+                    color: Colors.white,
+                    elevation: 5,
+                    child: Container(
+                      width: MediaQuery.of(context).size.width * 0.95,
+                      padding: EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                        border: Border(
+                          left: BorderSide(
+                            color: Colors.pink, //A COR MUDA COM A DISCIPLINA
+                            width: 3,
                           ),
                         ),
-                        Text('Autor'),
-                      ],
+                        borderRadius: BorderRadius.circular(7),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Horario e local ',
+                            style: TextStyle(fontSize: 10),
+                          ),
+                          Text(
+                            'Titulo',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                          Text('Autor'),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-              ],
+                );
+              },
             ),
           ),
         ],
@@ -171,4 +182,3 @@ class _AtividadesState extends State<Atividades> {
     );
   }
 }
-

@@ -1,6 +1,7 @@
 import 'package:chuva_dart/pages/atividadespage.dart';
 import 'package:chuva_dart/pages/atvcoordenadores.dart';
 import 'package:chuva_dart/pages/hompage.dart';
+import 'package:chuva_dart/routes/routes.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -13,14 +14,18 @@ class ChuvaDart extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       title: 'Flutter Demo',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
       debugShowCheckedModeBanner: false,
-      home: PalestrasCoordenadores(),
+
+      //Controle das rotas
+      routerDelegate: routes.routerDelegate,
+      routeInformationParser: routes.routeInformationParser,
+      routeInformationProvider: routes.routeInformationProvider,
     );
   }
 }
