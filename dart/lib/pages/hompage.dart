@@ -1,4 +1,4 @@
-import 'package:chuva_dart/pages/atividadepage.dart';
+import 'package:chuva_dart/pages/palestraspage.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -184,7 +184,7 @@ class _HomePageState extends State<HomePage> {
                       context,
                       MaterialPageRoute(
                         builder: (context) =>
-                            AtividadesPalestrantes(), // Substitua DetalhesPage pela sua página de detalhes
+                            Palestras(), // Substitua DetalhesPage pela sua página de detalhes
                       ),
                     );
                   },

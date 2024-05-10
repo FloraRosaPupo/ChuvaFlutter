@@ -1,4 +1,4 @@
-import 'package:chuva_dart/pages/atividadepage.dart';
+import 'package:chuva_dart/pages/palestraspage.dart';
 import 'package:flutter/material.dart';
 
 class AuthorPage extends StatelessWidget {
@@ -90,7 +90,7 @@ class AuthorPage extends StatelessWidget {
                         context,
                         MaterialPageRoute(
                           builder: (context) =>
-                              AtividadesPalestrantes(), // Substitua DetalhesPage pela sua página de detalhes
+                              Palestras(), // Substitua DetalhesPage pela sua página de detalhes
                         ),
                       );
                     },

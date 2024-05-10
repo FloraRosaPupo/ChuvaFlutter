@@ -1,3 +1,5 @@
+import 'package:chuva_dart/pages/atividadespage.dart';
+import 'package:chuva_dart/pages/atvcoordenadores.dart';
 import 'package:chuva_dart/pages/hompage.dart';
 import 'package:flutter/material.dart';
 
@@ -18,7 +20,7 @@ class ChuvaDart extends StatelessWidget {
         useMaterial3: true,
       ),
       debugShowCheckedModeBanner: false,
-      home: const HomePage(),
+      home: PalestrasCoordenadores(),
     );
   }
 }

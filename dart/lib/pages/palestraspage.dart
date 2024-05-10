@@ -1,12 +1,12 @@
 import 'package:chuva_dart/pages/autorpage.dart';
 import 'package:flutter/material.dart';
 
-class AtividadesPalestrantes extends StatefulWidget {
+class Palestras extends StatefulWidget {
   @override
-  State<AtividadesPalestrantes> createState() => _AtividadesPalestrantesState();
+  State<Palestras> createState() => _PalestrasState();
 }
 
-class _AtividadesPalestrantesState extends State<AtividadesPalestrantes> {
+class _PalestrasState extends State<Palestras> {
   bool _favorited = false;
   bool _loading = false;
   @override
@@ -35,15 +35,48 @@ class _AtividadesPalestrantesState extends State<AtividadesPalestrantes> {
         children: [
           Container(
             width: double.infinity,
-            height: 25,
+            height: 30,
             decoration: BoxDecoration(color: Colors.pink /*Cor da disciplina*/),
-            child:
-                Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
-              Text(
-                'Nome da atividade',
-                style: TextStyle(color: Colors.white, fontSize: 15),
-              ),
-            ]),
+            child: Padding(
+              padding: EdgeInsets.all(5),
+              child:
+                  Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
+                Text(
+                  'Nome da atividade',
+                  style: TextStyle(color: Colors.white, fontSize: 15),
+                ),
+              ]),
+            ),
+          ),
+
+          // SE TIVER ATRELADO A OUTRA ATIVIDADE
+          Container(
+            width: double.infinity,
+            height: 50,
+            decoration: BoxDecoration(color: Colors.blue),
+            child: Padding(
+              padding: EdgeInsets.all(5),
+              child:
+                  Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
+                Icon(
+                  Icons.date_range,
+                  size: 25,
+                  color: Colors.white,
+                ),
+                SizedBox(
+                  width: 5,
+                ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Esta atividade é parte de NOME DA ATIVIDADE',
+                      style: TextStyle(color: Colors.white, fontSize: 15),
+                    ),
+                  ],
+                )
+              ]),
+            ),
           ),
           SizedBox(
             height: 10,
