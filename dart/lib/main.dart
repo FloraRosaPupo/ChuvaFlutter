@@ -1,3 +1,4 @@
+import 'package:chuva_dart/pages/hompage.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -16,11 +17,15 @@ class ChuvaDart extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const Calendar(),
+      debugShowCheckedModeBanner: false,
+      home: const HomePage(),
     );
   }
 }
 
+
+
+/*
 class Calendar extends StatefulWidget {
   const Calendar({super.key});
 
@@ -141,3 +146,4 @@ class _ActivityState extends State<Activity> {
     );
   }
 }
+*/
