@@ -36,6 +36,8 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   go_router: ^14.0.2
+  dio: ^5.4.3+1
+  from_css_color: ^2.0.0
 
 dev_dependencies:
   flutter_test:
@@ -54,6 +56,8 @@ flutter:
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
+  assets:
+    - assets/activities.json
 
   # To add assets to your application, add an assets section, like this:
   # assets:
