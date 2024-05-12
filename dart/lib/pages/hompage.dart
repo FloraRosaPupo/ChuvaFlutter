@@ -1,8 +1,11 @@
 import 'dart:convert';
+
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:from_css_color/from_css_color.dart';
 import 'package:go_router/go_router.dart';
+import 'package:chuva_dart/model/activity.dart';
+import 'package:chuva_dart/pages/palestraspage.dart';
+import 'package:chuva_dart/services/activity_service.dart';
+import 'package:from_css_color/from_css_color.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -12,8 +15,9 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  List<dynamic> activities = [];
-  String jsonString = '';
+  List<Activity> activities = [];
+
+  final ActivityService _activityService = ActivityService();
 
   @override
   void initState() {
@@ -22,15 +26,10 @@ class _HomePageState extends State<HomePage> {
   }
 
   void fetchActivities() async {
-    try {
-      jsonString = await rootBundle.loadString('assets/activities.json');
-      Map<String, dynamic> jsonData = json.decode(jsonString);
-      setState(() {
-        activities = jsonData['data'];
-      });
-    } catch (e) {
-      print('Erro ao carregar atividades: $e');
-    }
+    List<Activity> fetchedActivities = await _activityService.fetchActivities();
+    setState(() {
+      activities = fetchedActivities;
+    });
   }
 
   @override
@@ -38,7 +37,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blueGrey,
-        title: Text(
+        title: const Text(
           'Chuva 💜 Flutter',
           style: TextStyle(
             fontWeight: FontWeight.w500,
@@ -62,33 +61,33 @@ class _HomePageState extends State<HomePage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Text(
+                const Text(
                   'Programação',
                   style: TextStyle(color: Colors.white, fontSize: 20),
                 ),
                 Padding(
-                  padding: EdgeInsets.all(10.0),
+                  padding: const EdgeInsets.all(10.0),
                   child: Card(
                     color: Colors.white,
                     elevation: 5,
                     child: Row(
                       children: [
                         Padding(
-                          padding: EdgeInsets.all(3),
+                          padding: const EdgeInsets.all(3),
                           child: Container(
-                            decoration: BoxDecoration(
+                            decoration: const BoxDecoration(
                               shape: BoxShape.circle,
                               color: Colors.blueAccent,
                             ),
-                            padding: EdgeInsets.all(8),
-                            child:
-                                Icon(Icons.calendar_month, color: Colors.black),
+                            padding: const EdgeInsets.all(8),
+                            child: const Icon(Icons.calendar_month,
+                                color: Colors.black),
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 50,
                         ),
-                        Text('Exibindo todas as atividades'),
+                        const Text('Exibindo todas as atividades'),
                       ],
                     ),
                   ),
@@ -109,7 +108,7 @@ class _HomePageState extends State<HomePage> {
                   child: TextButton(
                     onPressed: fetchActivities,
                     child: Column(
-                      children: [
+                      children: const [
                         Text(
                           'Nov',
                           style: TextStyle(
@@ -136,7 +135,7 @@ class _HomePageState extends State<HomePage> {
                     },
                     child: Text(
                       '$i',
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
                       ),
@@ -152,46 +151,49 @@ class _HomePageState extends State<HomePage> {
               itemCount: activities.length,
               itemBuilder: (context, index) {
                 var activity = activities[index];
-                var startTime = DateTime.tryParse(activity['start'] ?? '');
-                var endTime = DateTime.tryParse(activity['end'] ?? '');
+                var startTime = DateTime.tryParse(activity.start);
+                var endTime = DateTime.tryParse(activity.end);
 
                 if (startTime == null || endTime == null) {
-                  return SizedBox
+                  return const SizedBox
                       .shrink(); // Se não conseguirmos parsear o tempo, retornamos um widget vazio
                 }
 
-                var location = activity['locations'] != null &&
-                        activity['locations'].isNotEmpty
-                    ? activity['locations'][0]['title']['pt-br']
-                    : 'Local não especificado';
+                var location =
+                    activity.locations != null && activity.locations!.isNotEmpty
+                        ? activity.locations![0]['title']['pt-br']
+                        : 'Local não especificado';
 
-                var title = activity['title'] != null &&
-                        activity['title']['pt-br'] != null
-                    ? activity['title']['pt-br']
+                var title = activity.title.isNotEmpty
+                    ? activity.title['pt-br']
                     : 'Título não especificado';
 
                 var author =
-                    activity['people'] != null && activity['people'].isNotEmpty
-                        ? activity['people'][0]['name']
+                    activity.people != null && activity.people!.isNotEmpty
+                        ? activity.people![0]['name']
                         : 'Autor não especificado';
 
-                var backgroundColor = activity['category'] != null &&
-                        activity['category']['background-color'] != null
-                    ? fromCssColor(activity['category']['background-color'])
+                var backgroundColor = activity.category != null &&
+                        activity.category['background-color'] != null
+                    ? fromCssColor(activity.category['background-color'])
                     : Colors.white;
-                var cardColor = activity['category'] != null &&
-                        activity['category']['color'] != null
-                    ? fromCssColor(activity['category']['color'])
+                var cardColor = activity.category != null &&
+                        activity.category['color'] != null
+                    ? fromCssColor(activity.category['color'])
                     : Colors.white;
 
                 return GestureDetector(
-                  onTap: () => GoRouter.of(context).push('/palestras'),
+                  onTap: () {
+                    GoRouter.of(context).go(
+                      '/palestras?activity=${Uri.encodeComponent(jsonEncode(activity.toJson()))}',
+                    );
+                  },
                   child: Card(
                     color: backgroundColor,
                     elevation: 5,
                     child: Container(
                       width: MediaQuery.of(context).size.width * 0.95,
-                      padding: EdgeInsets.all(10),
+                      padding: const EdgeInsets.all(10),
                       decoration: BoxDecoration(
                         border: Border(
                           left: BorderSide(
@@ -206,11 +208,11 @@ class _HomePageState extends State<HomePage> {
                         children: [
                           Text(
                             '${startTime.hour}:${startTime.minute} - $location',
-                            style: TextStyle(fontSize: 10),
+                            style: const TextStyle(fontSize: 10),
                           ),
                           Text(
                             title,
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.w600,
                             ),
@@ -229,18 +231,11 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  void loadActivitiesForSelectedDays(int selectedDay) {
+  void loadActivitiesForSelectedDays(int day) {
     setState(() {
-      activities = jsonDecode(jsonString)['data'].where((activity) {
-        // Verificar se o início da atividade está no intervalo de 26 a 30 de novembro de 2023
-        var startDate = DateTime.tryParse(activity['start'] ?? '');
-        if (startDate != null) {
-          var day = startDate.day;
-          var month = startDate.month;
-          var year = startDate.year;
-          return month == 11 && year == 2023 && day == selectedDay;
-        }
-        return false;
+      activities = activities.where((activity) {
+        var startDate = DateTime.tryParse(activity.start);
+        return startDate != null && startDate.day == day;
       }).toList();
     });
   }

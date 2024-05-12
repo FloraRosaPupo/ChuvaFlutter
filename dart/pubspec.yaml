@@ -38,6 +38,7 @@ dependencies:
   go_router: ^14.0.2
   dio: ^5.4.3+1
   from_css_color: ^2.0.0
+  json_annotation: ^4.9.0
 
 dev_dependencies:
   flutter_test:
@@ -48,6 +49,8 @@ dev_dependencies:
     sdk: flutter
   test: any
   flutter_lints: ^2.0.0
+  json_serializable: ^6.8.0
+  build_runner: ^2.4.9
 
 # The following section is specific to Flutter packages.
 flutter:
