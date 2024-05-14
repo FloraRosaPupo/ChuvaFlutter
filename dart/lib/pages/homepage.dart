@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:chuva_dart/model/activity.dart';
-import 'package:chuva_dart/pages/palestraspage.dart';
 import 'package:chuva_dart/services/activity_service.dart';
 import 'package:from_css_color/from_css_color.dart';
 
@@ -16,8 +15,8 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   List<Activity> activities = [];
-
   final ActivityService _activityService = ActivityService();
+  int? selectedDay;
 
   @override
   void initState() {
@@ -46,6 +45,13 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
         centerTitle: true,
+        leading: IconButton(
+          icon: Icon(
+            Icons.autorenew_rounded,
+            color: Colors.white,
+          ),
+          onPressed: fetchActivities,
+        ),
       ),
       body: Column(
         children: [
@@ -84,9 +90,7 @@ class _HomePageState extends State<HomePage> {
                                 color: Colors.black),
                           ),
                         ),
-                        const SizedBox(
-                          width: 50,
-                        ),
+                        const SizedBox(width: 50),
                         const Text('Exibindo todas as atividades'),
                       ],
                     ),
@@ -106,7 +110,12 @@ class _HomePageState extends State<HomePage> {
                 Container(
                   decoration: BoxDecoration(color: Colors.white),
                   child: TextButton(
-                    onPressed: fetchActivities,
+                    onPressed: () {
+                      setState(() {
+                        selectedDay = null;
+                        fetchActivities();
+                      });
+                    },
                     child: Column(
                       children: const [
                         Text(
@@ -131,13 +140,25 @@ class _HomePageState extends State<HomePage> {
                 for (var i = 26; i <= 30; i++)
                   TextButton(
                     onPressed: () {
-                      loadActivitiesForSelectedDays(i);
+                      setState(() {
+                        selectedDay = i;
+                        loadActivitiesForSelectedDays(i);
+                      });
                     },
+                    style: ButtonStyle(
+                      overlayColor: MaterialStateColor.resolveWith((states) {
+                        return i == selectedDay
+                            ? Colors.transparent
+                            : Colors.white.withOpacity(0.3);
+                      }),
+                    ),
                     child: Text(
                       '$i',
-                      style: const TextStyle(
+                      style: TextStyle(
                         color: Colors.white,
-                        fontWeight: FontWeight.bold,
+                        fontWeight: selectedDay == i
+                            ? FontWeight.bold
+                            : FontWeight.normal,
                       ),
                     ),
                   ),
@@ -151,35 +172,34 @@ class _HomePageState extends State<HomePage> {
               itemCount: activities.length,
               itemBuilder: (context, index) {
                 var activity = activities[index];
-                var startTime = DateTime.tryParse(activity.start);
-                var endTime = DateTime.tryParse(activity.end);
+                var startTime = DateTime.tryParse(activity.start ?? '');
+                var endTime = DateTime.tryParse(activity.end ?? '');
 
                 if (startTime == null || endTime == null) {
-                  return const SizedBox
+                  return SizedBox
                       .shrink(); // Se não conseguirmos parsear o tempo, retornamos um widget vazio
                 }
 
-                var location =
-                    activity.locations != null && activity.locations!.isNotEmpty
-                        ? activity.locations![0]['title']['pt-br']
-                        : 'Local não especificado';
+                var location = activity.locations?.isNotEmpty == true
+                    ? activity.locations![0]['title']['pt-br'] ??
+                        'Local não especificado'
+                    : 'Local não especificado';
 
-                var title = activity.title.isNotEmpty
-                    ? activity.title['pt-br']
+                var title = activity.title != null && activity.title!.isNotEmpty
+                    ? activity.title!['pt-br'] ?? 'Título não especificado'
                     : 'Título não especificado';
 
-                var author =
-                    activity.people != null && activity.people!.isNotEmpty
-                        ? activity.people![0]['name']
-                        : 'Autor não especificado';
+                var author = activity.people?.isNotEmpty == true
+                    ? activity.people![0]['name'] ?? 'Autor não especificado'
+                    : 'Autor não especificado';
 
                 var backgroundColor = activity.category != null &&
-                        activity.category['background-color'] != null
-                    ? fromCssColor(activity.category['background-color'])
+                        activity.category?['background-color'] != null
+                    ? fromCssColor(activity.category?['background-color'])
                     : Colors.white;
                 var cardColor = activity.category != null &&
-                        activity.category['color'] != null
-                    ? fromCssColor(activity.category['color'])
+                        activity.category?['color'] != null
+                    ? fromCssColor(activity.category?['color'])
                     : Colors.white;
 
                 return GestureDetector(
@@ -231,12 +251,14 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  void loadActivitiesForSelectedDays(int day) {
-    setState(() {
-      activities = activities.where((activity) {
-        var startDate = DateTime.tryParse(activity.start);
-        return startDate != null && startDate.day == day;
-      }).toList();
-    });
+  void loadActivitiesForSelectedDays(int? day) async {
+    if (day == null) {
+      fetchActivities();
+    } else {
+      var fetchedActivities = await _activityService.fetchActivities(day: day);
+      setState(() {
+        activities = fetchedActivities;
+      });
+    }
   }
 }

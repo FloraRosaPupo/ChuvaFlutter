@@ -170,10 +170,7 @@ class _PalestrasCoordenadoresState extends State<PalestrasCoordenadores> {
                 GestureDetector(
                   onTap: () {
                     // Navegar para a página do autor
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => AuthorPage()),
-                    );
+                    
                   },
                   child: Row(
                     children: [

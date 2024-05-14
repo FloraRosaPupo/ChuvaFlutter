@@ -1,6 +1,3 @@
-import 'package:chuva_dart/pages/atividadespage.dart';
-import 'package:chuva_dart/pages/atvcoordenadores.dart';
-import 'package:chuva_dart/pages/hompage.dart';
 import 'package:chuva_dart/routes/routes.dart';
 import 'package:flutter/material.dart';
 
