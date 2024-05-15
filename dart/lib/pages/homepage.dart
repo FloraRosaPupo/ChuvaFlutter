@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:chuva_dart/model/activity.dart';
@@ -176,31 +175,34 @@ class _HomePageState extends State<HomePage> {
                 var endTime = DateTime.tryParse(activity.end ?? '');
 
                 if (startTime == null || endTime == null) {
-                  return SizedBox
-                      .shrink(); // Se não conseguirmos parsear o tempo, retornamos um widget vazio
+                  return SizedBox.shrink();
                 }
-
-                var location = activity.locations?.isNotEmpty == true
-                    ? activity.locations![0]['title']['pt-br'] ??
-                        'Local não especificado'
-                    : 'Local não especificado';
 
                 var title = activity.title != null && activity.title!.isNotEmpty
                     ? activity.title!['pt-br'] ?? 'Título não especificado'
                     : 'Título não especificado';
 
-                var author = activity.people?.isNotEmpty == true
-                    ? activity.people![0]['name'] ?? 'Autor não especificado'
-                    : 'Autor não especificado';
+                var people = activity.people?.isNotEmpty == true
+                    ? activity.people!
+                        .map((person) => person['name'])
+                        .join(', ')
+                    : '';
 
-                var backgroundColor = activity.category != null &&
-                        activity.category?['background-color'] != null
-                    ? fromCssColor(activity.category?['background-color'])
-                    : Colors.white;
                 var cardColor = activity.category != null &&
                         activity.category?['color'] != null
                     ? fromCssColor(activity.category?['color'])
                     : Colors.white;
+
+                var isSubActivity = false;
+                if (index > 0) {
+                  var previousActivity = activities[index - 1];
+                  var previousStartTime =
+                      DateTime.tryParse(previousActivity.start ?? '');
+                  if (previousStartTime != null &&
+                      previousStartTime.hour == startTime.hour) {
+                    isSubActivity = true;
+                  }
+                }
 
                 return GestureDetector(
                   onTap: () {
@@ -209,15 +211,17 @@ class _HomePageState extends State<HomePage> {
                     );
                   },
                   child: Card(
-                    color: backgroundColor,
+                    color: Colors.white,
                     elevation: 5,
                     child: Container(
                       width: MediaQuery.of(context).size.width * 0.95,
                       padding: const EdgeInsets.all(10),
+                      margin: EdgeInsets.only(
+                          left: isSubActivity ? 30 : 0), // Margem esquerda para subatividades
                       decoration: BoxDecoration(
                         border: Border(
                           left: BorderSide(
-                            color: cardColor, //A COR MUDA COM A DISCIPLINA
+                            color: cardColor,
                             width: 3,
                           ),
                         ),
@@ -227,7 +231,7 @@ class _HomePageState extends State<HomePage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            '${startTime.hour}:${startTime.minute} - $location',
+                            '${activity.type?['title']['pt-br']} de ${startTime.hour}:00 ate ${endTime.hour}:00',
                             style: const TextStyle(fontSize: 10),
                           ),
                           Text(
@@ -237,7 +241,7 @@ class _HomePageState extends State<HomePage> {
                               fontWeight: FontWeight.w600,
                             ),
                           ),
-                          Text(author),
+                          Text(people),
                         ],
                       ),
                     ),

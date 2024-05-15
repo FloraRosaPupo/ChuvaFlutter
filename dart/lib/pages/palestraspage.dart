@@ -62,7 +62,7 @@ class _PalestrasPageState extends State<PalestrasPage> {
             color: Colors.white,
           ),
           onPressed: () {
-            GoRouter.of(context).pop();
+            GoRouter.of(context).push('/');
           },
         ),
       ),
@@ -198,6 +198,7 @@ class _PalestrasPageState extends State<PalestrasPage> {
                       itemCount: activity.people!.length,
                       itemBuilder: (context, index) {
                         var person = activity.people![index];
+
                         return GestureDetector(
                           onTap: () {
                             GoRouter.of(context).go(
@@ -211,7 +212,8 @@ class _PalestrasPageState extends State<PalestrasPage> {
                                   ClipRRect(
                                     borderRadius: BorderRadius.circular(25),
                                     child: CachedNetworkImage(
-                                      imageUrl: person['picture'],
+                                      imageUrl: person['picture'] ??
+                                          'https://img2.gratispng.com/20180426/oaw/kisspng-computer-icons-avatar-symbol-clip-art-5ae226ac704125.7511328915247704764598.jpg',
                                       placeholder: (context, url) =>
                                           CircularProgressIndicator(),
                                       errorWidget: (context, url, error) =>
@@ -227,12 +229,12 @@ class _PalestrasPageState extends State<PalestrasPage> {
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        '${person['name']}',
+                                        '${person['name'] ?? ''}',
                                         style: TextStyle(
                                             fontWeight: FontWeight.w600),
                                       ),
                                       SizedBox(height: 4),
-                                      Text('${person['institution']}'),
+                                      Text('${person['institution'] ?? ''}'),
                                     ],
                                   )
                                 ],

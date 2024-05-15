@@ -1,4 +1,4 @@
-import 'package:chuva_dart/pages/autorpage.dart';
+import 'package:chuva_dart/pages/people.dart';
 import 'package:flutter/material.dart';
 
 class PalestrasCoordenadores extends StatefulWidget {

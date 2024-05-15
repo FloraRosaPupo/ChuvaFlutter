@@ -5,7 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:chuva_dart/model/activity.dart';
 import 'package:chuva_dart/pages/atividadespage.dart';
 import 'package:chuva_dart/pages/atvcoordenadores.dart';
-import 'package:chuva_dart/pages/autorpage.dart';
+import 'package:chuva_dart/pages/people.dart';
 import 'package:chuva_dart/pages/homepage.dart';
 import 'package:chuva_dart/pages/palestraspage.dart';
 
@@ -42,17 +42,17 @@ final routes = GoRouter(
         final queryParameters = uri.queryParameters;
         final activityData = queryParameters['activity'];
 
-        try {
-          if (activityData != null) {
-            return AuthorPage(activityData: jsonDecode(activityData));
-          }
-        } catch (e) {
-          print('Erro ao decodificar os dados da atividade: $e');
+        if (activityData != null) {
+          return PeoplePage(person: jsonDecode(activityData));
         }
 
-        return ErrorPage(
-            message:
-                'Dados da atividade não encontrados na rota dos palestrantes.');
+        return Scaffold(
+          body: Center(
+            child: Text(
+              'Erro: Dados da pessoa não encontrados na rota.',
+            ),
+          ),
+        );
       },
     ),
     GoRoute(

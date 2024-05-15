@@ -1,4 +1,4 @@
-import 'package:chuva_dart/pages/autorpage.dart';
+import 'package:chuva_dart/pages/people.dart';
 import 'package:chuva_dart/pages/palestraspage.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
