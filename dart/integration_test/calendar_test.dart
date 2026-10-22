@@ -1,3 +1,4 @@
+import 'package:chuva_dart/pages/homepage.dart';
 import 'package:chuva_dart/main.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
@@ -22,7 +23,7 @@ void main() {
       // Check that 'Palestra de 09:30 até 10:00' is not on the screen before tapping '28'.
       expect(find.text('Palestra de 09:30 até 10:00'), findsNothing);
       await expectLater(
-        find.byType(Calendar),
+        find.byType(HomePage),
         matchesGoldenFile('../screenshots/CalendarPage-Day26.png'),
       );
 
@@ -31,7 +32,7 @@ void main() {
       await tester.pumpAndSettle();
 
       await expectLater(
-        find.byType(Calendar),
+        find.byType(HomePage),
         matchesGoldenFile('../screenshots/CalendarPage-Day28.png'),
       );
 

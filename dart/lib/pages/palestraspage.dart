@@ -139,8 +139,8 @@ class _PalestrasPageState extends State<PalestrasPage> {
                     width: MediaQuery.of(context).size.width * 0.95,
                     child: ElevatedButton.icon(
                       style: ElevatedButton.styleFrom(
-                        primary: _loading ? Colors.grey : Colors.blue,
-                        onPrimary: Colors.white,
+                        backgroundColor: _loading ? Colors.grey : Colors.blue,
+                        foregroundColor: Colors.white,
                       ),
                       onPressed: _loading
                           ? null

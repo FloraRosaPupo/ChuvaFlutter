@@ -1,3 +1,4 @@
+import 'package:chuva_dart/pages/atividadespage.dart';
 import 'package:chuva_dart/main.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
@@ -16,7 +17,7 @@ void main() {
     testWidgets('Verifica elementos da atividade', (WidgetTester tester) async {
       await loadActivityPage(tester);
       await expectLater(
-        find.byType(Activity),
+        find.byType(Atividades),
         matchesGoldenFile('../screenshots/ActivityPage-Unfavorited.png'),
       );
 
@@ -30,7 +31,7 @@ void main() {
     testWidgets('Verifica se favoritar funciona', (WidgetTester tester) async {
       await loadActivityPage(tester);
       await expectLater(
-        find.byType(Activity),
+        find.byType(Atividades),
         matchesGoldenFile('../screenshots/ActivityPage-Unfavorited.png'),
       );
       await tester.tap(find.text('Adicionar à sua agenda'));
@@ -38,7 +39,7 @@ void main() {
 
       expect(find.text('Remover da sua agenda'), findsOneWidget);
       await expectLater(
-        find.byType(Activity),
+        find.byType(Atividades),
         matchesGoldenFile('../screenshots/ActivityPage-Favorited.png'),
       );
     });
