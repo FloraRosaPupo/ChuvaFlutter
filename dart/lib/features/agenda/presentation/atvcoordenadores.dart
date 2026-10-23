@@ -1,4 +1,4 @@
-import 'package:chuva_dart/pages/people.dart';
+import 'package:chuva_dart/features/agenda/presentation/people.dart';
 import 'package:flutter/material.dart';
 
 class PalestrasCoordenadores extends StatefulWidget {
@@ -119,10 +119,10 @@ class _PalestrasCoordenadoresState extends State<PalestrasCoordenadores> {
                   width: MediaQuery.of(context).size.width * 0.95,
                   child: ElevatedButton.icon(
                     style: ElevatedButton.styleFrom(
-                      primary: _loading
+                      backgroundColor: _loading
                           ? Colors.grey
                           : Colors.blue, // Cor cinza se estiver carregando
-                      onPrimary: Colors.white,
+                      foregroundColor: Colors.white,
                     ),
                     onPressed: _loading
                         ? null // Desabilitar o botão enquanto estiver carregando
@@ -170,7 +170,6 @@ class _PalestrasCoordenadoresState extends State<PalestrasCoordenadores> {
                 GestureDetector(
                   onTap: () {
                     // Navegar para a página do autor
-                    
                   },
                   child: Row(
                     children: [

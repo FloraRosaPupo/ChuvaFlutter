@@ -1,5 +1,5 @@
-import 'package:chuva_dart/pages/people.dart';
-import 'package:chuva_dart/pages/palestraspage.dart';
+import 'package:chuva_dart/features/agenda/presentation/people.dart';
+import 'package:chuva_dart/features/agenda/presentation/palestraspage.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -89,8 +89,8 @@ class _AtividadesState extends State<Atividades> {
                   width: MediaQuery.of(context).size.width * 0.95,
                   child: ElevatedButton.icon(
                     style: ElevatedButton.styleFrom(
-                      primary: _loading ? Colors.grey : Colors.blue,
-                      onPrimary: Colors.white,
+                      backgroundColor: _loading ? Colors.grey : Colors.blue,
+                      foregroundColor: Colors.white,
                     ),
                     onPressed: _loading
                         ? null

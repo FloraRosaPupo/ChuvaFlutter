@@ -2,12 +2,12 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:chuva_dart/model/activity.dart';
-import 'package:chuva_dart/pages/atividadespage.dart';
-import 'package:chuva_dart/pages/atvcoordenadores.dart';
-import 'package:chuva_dart/pages/people.dart';
-import 'package:chuva_dart/pages/homepage.dart';
-import 'package:chuva_dart/pages/palestraspage.dart';
+import 'package:chuva_dart/features/agenda/domain/activity.dart';
+import 'package:chuva_dart/features/agenda/presentation/atividadespage.dart';
+import 'package:chuva_dart/features/agenda/presentation/atvcoordenadores.dart';
+import 'package:chuva_dart/features/agenda/presentation/people.dart';
+import 'package:chuva_dart/features/agenda/presentation/homepage.dart';
+import 'package:chuva_dart/features/agenda/presentation/palestraspage.dart';
 
 final routes = GoRouter(
   routes: [

@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:chuva_dart/model/activity.dart';
+import 'package:chuva_dart/features/agenda/domain/activity.dart';
 import 'package:from_css_color/from_css_color.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
@@ -139,8 +139,8 @@ class _PalestrasPageState extends State<PalestrasPage> {
                     width: MediaQuery.of(context).size.width * 0.95,
                     child: ElevatedButton.icon(
                       style: ElevatedButton.styleFrom(
-                        primary: _loading ? Colors.grey : Colors.blue,
-                        onPrimary: Colors.white,
+                        backgroundColor: _loading ? Colors.grey : Colors.blue,
+                        foregroundColor: Colors.white,
                       ),
                       onPressed: _loading
                           ? null
