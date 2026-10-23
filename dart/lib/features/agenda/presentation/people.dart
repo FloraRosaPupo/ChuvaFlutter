@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:chuva_dart/model/activity.dart';
-import 'package:chuva_dart/services/activity_service.dart';
+import 'package:chuva_dart/features/agenda/domain/activity.dart';
+import 'package:chuva_dart/features/agenda/data/activity_service.dart';
 import 'package:flutter/material.dart';
 import 'package:from_css_color/from_css_color.dart';
 import 'package:go_router/go_router.dart';

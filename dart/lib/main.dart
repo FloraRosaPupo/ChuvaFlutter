@@ -1,4 +1,4 @@
-import 'package:chuva_dart/routes/routes.dart';
+import 'package:chuva_dart/app/routes/routes.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -26,8 +26,6 @@ class ChuvaDart extends StatelessWidget {
     );
   }
 }
-
-
 
 /*
 class Calendar extends StatefulWidget {

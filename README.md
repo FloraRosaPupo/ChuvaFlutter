@@ -27,3 +27,22 @@ A CI valida análise e testes em pushes e pull requests. Serviços externos prec
 ## Testes de integração históricos
 
 `dart/integration_test/` contém expectativas visuais do exercício original, dependentes de dispositivo. A CI padrão executa os testes de modelo/serviço em `dart/test/`; o build iOS é manual. Golden files não são regenerados automaticamente para fazer uma validação passar.
+
+
+## Funcionalidades
+
+- Agenda do evento.
+- filtro por dia.
+- detalhes de atividades e pessoas.
+
+
+## Licença
+
+Não há licença de distribuição definida neste repositório. Os direitos de terceiros e as atribuições existentes devem ser respeitados; esta revisão não concede permissão de redistribuição.
+
+
+## Organização e manutenção
+
+Catálogo, serviço e telas foram reunidos em `dart/lib/features/agenda`; rotas permanecem em `dart/lib/app`. O serviço cuida da leitura/conversão, a tela apresenta os dados. Estado local é suficiente para este catálogo.
+
+Veja [a revisão de desenvolvimento](docs/REVISAO.md) para decisões, testes e limites, e [o guia de contribuição](CONTRIBUTING.md) para o fluxo de manutenção.

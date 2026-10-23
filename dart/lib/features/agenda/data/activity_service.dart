@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/services.dart';
-import 'package:chuva_dart/model/activity.dart';
+import 'package:chuva_dart/features/agenda/domain/activity.dart';
 
 class ActivityService {
   Future<List<Activity>> fetchActivities({int? day}) async {

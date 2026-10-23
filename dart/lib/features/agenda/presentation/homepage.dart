@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:chuva_dart/model/activity.dart';
-import 'package:chuva_dart/services/activity_service.dart';
+import 'package:chuva_dart/features/agenda/domain/activity.dart';
+import 'package:chuva_dart/features/agenda/data/activity_service.dart';
 import 'package:from_css_color/from_css_color.dart';
 
 class HomePage extends StatefulWidget {
@@ -217,7 +217,9 @@ class _HomePageState extends State<HomePage> {
                       width: MediaQuery.of(context).size.width * 0.95,
                       padding: const EdgeInsets.all(10),
                       margin: EdgeInsets.only(
-                          left: isSubActivity ? 30 : 0), // Margem esquerda para subatividades
+                          left: isSubActivity
+                              ? 30
+                              : 0), // Margem esquerda para subatividades
                       decoration: BoxDecoration(
                         border: Border(
                           left: BorderSide(

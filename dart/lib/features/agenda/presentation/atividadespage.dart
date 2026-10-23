@@ -1,14 +1,17 @@
-import 'package:chuva_dart/pages/people.dart';
+import 'package:chuva_dart/features/agenda/presentation/people.dart';
+import 'package:chuva_dart/features/agenda/presentation/palestraspage.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
-class PalestrasCoordenadores extends StatefulWidget {
+class Atividades extends StatefulWidget {
   @override
-  State<PalestrasCoordenadores> createState() => _PalestrasCoordenadoresState();
+  State<Atividades> createState() => _AtividadesState();
 }
 
-class _PalestrasCoordenadoresState extends State<PalestrasCoordenadores> {
+class _AtividadesState extends State<Atividades> {
   bool _favorited = false;
   bool _loading = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,7 +20,10 @@ class _PalestrasCoordenadoresState extends State<PalestrasCoordenadores> {
         title: const Text(
           'Chuva 💜 Flutter',
           style: TextStyle(
-              fontWeight: FontWeight.w500, color: Colors.white, fontSize: 17),
+            fontWeight: FontWeight.w500,
+            color: Colors.white,
+            fontSize: 17,
+          ),
         ),
         centerTitle: true,
         leading: IconButton(
@@ -35,8 +41,8 @@ class _PalestrasCoordenadoresState extends State<PalestrasCoordenadores> {
         children: [
           Container(
             width: double.infinity,
-            height: 30,
-            decoration: BoxDecoration(color: Colors.pink /*Cor da disciplina*/),
+            height: 25,
+            decoration: BoxDecoration(color: Colors.pink),
             child: Padding(
               padding: EdgeInsets.all(5),
               child:
@@ -48,46 +54,12 @@ class _PalestrasCoordenadoresState extends State<PalestrasCoordenadores> {
               ]),
             ),
           ),
-
-          /* SE TIVER ATRELADO A OUTRA ATIVIDADE
-          Container(
-            width: double.infinity,
-            height: 50,
-            decoration: BoxDecoration(color: Colors.blue),
-            child: Padding(
-              padding: EdgeInsets.all(5),
-              child:
-                  Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
-                Icon(
-                  Icons.date_range,
-                  size: 25,
-                  color: Colors.white,
-                ),
-                SizedBox(
-                  width: 5,
-                ),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Esta atividade é parte de NOME DA ATIVIDADE',
-                      style: TextStyle(color: Colors.white, fontSize: 15),
-                    ),
-                  ],
-                )
-              ]),
-            ),
-          ),*/
-          SizedBox(
-            height: 10,
-          ),
+          SizedBox(height: 10),
           Text(
             'TITULO',
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
           ),
-          SizedBox(
-            height: 10,
-          ),
+          SizedBox(height: 10),
           Padding(
             padding: EdgeInsets.all(10),
             child: Column(
@@ -112,37 +84,29 @@ class _PalestrasCoordenadoresState extends State<PalestrasCoordenadores> {
                     Text('Local'),
                   ],
                 ),
-                SizedBox(
-                  height: 10,
-                ),
+                SizedBox(height: 10),
                 Container(
                   width: MediaQuery.of(context).size.width * 0.95,
                   child: ElevatedButton.icon(
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: _loading
-                          ? Colors.grey
-                          : Colors.blue, // Cor cinza se estiver carregando
+                      backgroundColor: _loading ? Colors.grey : Colors.blue,
                       foregroundColor: Colors.white,
                     ),
                     onPressed: _loading
-                        ? null // Desabilitar o botão enquanto estiver carregando
+                        ? null
                         : () {
                             setState(() {
-                              _loading =
-                                  true; // Indicador de carregamento ativado
+                              _loading = true;
                             });
-
-                            // Simulação de processo assíncrono
                             Future.delayed(Duration(seconds: 2), () {
                               setState(() {
                                 _favorited = !_favorited;
-                                _loading =
-                                    false; // Indicador de carregamento desativado
+                                _loading = false;
                               });
                             });
                           },
                     icon: _loading
-                        ? Icon(Icons.cached) // Ícone de carregamento
+                        ? Icon(Icons.cached)
                         : _favorited
                             ? const Icon(Icons.star)
                             : const Icon(Icons.star_outline),
@@ -153,51 +117,64 @@ class _PalestrasCoordenadoresState extends State<PalestrasCoordenadores> {
                             : 'Adicionar à sua agenda'),
                   ),
                 ),
-                SizedBox(
-                  height: 30,
-                ),
+                SizedBox(height: 30),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Text(
-                      'Coordenador',
-                      style:
-                          TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
+                      'Sub-atividades',
+                      style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                   ],
                 ),
-                SizedBox(height: 10),
-                GestureDetector(
-                  onTap: () {
-                    // Navegar para a página do autor
-
-                  },
-                  child: Row(
-                    children: [
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(25),
-                        child: Image.network(
-                          'https://via.placeholder.com/150', // Substituir pela URL da imagem do autor
-                          width: 50,
-                          height: 50,
-                          fit: BoxFit.cover,
+              ],
+            ),
+          ),
+          Expanded(
+            child: ListView.builder(
+              //itemCount: activitiesForSelectedDay.length,
+              itemBuilder: (context, index) {
+                return GestureDetector(
+                  onTap: () => GoRouter.of(context).push('/palestras'),
+                  child: Card(
+                    color: Colors.white,
+                    elevation: 5,
+                    child: Container(
+                      width: MediaQuery.of(context).size.width * 0.95,
+                      padding: EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                        border: Border(
+                          left: BorderSide(
+                            color: Colors.pink, //A COR MUDA COM A DISCIPLINA
+                            width: 3,
+                          ),
                         ),
+                        borderRadius: BorderRadius.circular(7),
                       ),
-                      SizedBox(width: 20),
-                      Column(
+                      child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Nome coordenador',
-                            style: TextStyle(fontWeight: FontWeight.w500),
+                            'Horario e local ',
+                            style: TextStyle(fontSize: 10),
                           ),
-                          Text('Universidade'),
+                          Text(
+                            'Titulo',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                          Text('Autor'),
                         ],
                       ),
-                    ],
+                    ),
                   ),
-                ),
-              ],
+                );
+              },
             ),
           ),
         ],
